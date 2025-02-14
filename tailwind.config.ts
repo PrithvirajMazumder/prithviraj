@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+        "rotate-loader-text": "spin 4s linear infinite", 
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
