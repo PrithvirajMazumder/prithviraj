@@ -37,7 +37,6 @@ const LoaderText = (props: LoaderTextProps) => {
 
   useGSAP(
     () => {
-      console.log("setShouldEnd: ", shouldEnd);
       if (props.startAnimation) {
         gsap.to(".loader-text", {
           x: 0,
@@ -70,20 +69,28 @@ const LoaderText = (props: LoaderTextProps) => {
   );
 };
 
-export const InitialLoader = () => {
+type InitialLoaderProps = {
+  onLoadComplete: () => void;
+};
+export const InitialLoader = (props: InitialLoaderProps) => {
   const [activeLoaderLevel, setActiveLoaderLevel] = useState(
     loaderLevels[0].step
   );
 
   return (
-    <div className="w-svh h-svh bg-foreground relative">
+    <div className="w-svh h-svh bg-foreground relative z-50">
       <div className="absolute bottom-0 left-0 flex w-full justify-center">
         {loaderLevels.map((level) => (
           <LoaderText
             level={level.levelText}
             key={`initial-loader-${level.step}`}
             startAnimation={activeLoaderLevel === level.step}
-            onAnimationComplete={() => setActiveLoaderLevel(level.step + 1)}
+            onAnimationComplete={() => {
+              if (level.step === loaderLevels.length) {
+                return props.onLoadComplete();
+              }
+              setActiveLoaderLevel(level.step + 1);
+            }}
           />
         ))}
       </div>
