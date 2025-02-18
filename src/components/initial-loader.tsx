@@ -78,7 +78,7 @@ export const InitialLoader = (props: InitialLoaderProps) => {
   );
 
   return (
-    <div className="w-svh h-svh bg-foreground relative z-50">
+    <div className="w-svh h-svh bg-foreground relative z-40">
       <div className="absolute bottom-0 left-0 flex w-full justify-center">
         {loaderLevels.map((level) => (
           <LoaderText
