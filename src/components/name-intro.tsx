@@ -4,7 +4,7 @@ import { gsap } from 'gsap'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
-const Name = 'Prithvi Raj'
+const Name = 'Prithviraj'
 
 type Props = {
   onAnimationComplete?: () => void
@@ -156,7 +156,7 @@ export const NameIntro = (props: Props) => {
     <>
       <div
         ref={accentBackdropRef}
-        className="accent-backdrop fixed left-1/2  -translate-x-1/2 w-[calc(100svh*2)] h-[calc(100svh*2)] rounded-full z-10 bg-blue-800"
+        className="accent-backdrop fixed left-1/2  -translate-x-1/2 w-[calc(100svh*2)] h-[calc(100svh*2)] rounded-full z-10 bg-foreground"
       />
       <div
         ref={containerRef}
@@ -165,7 +165,7 @@ export const NameIntro = (props: Props) => {
         <div className="absolute bg-foreground w-full h-full bottom-0 left-0 backdrop" />
         {/* NAVBAR */}
         <div
-          className="fixed top-0 left-1/2 -translate-x-1/2 py-8 z-50 flex justify-between gap-12 mix-blend-difference"
+          className="fixed top-0 left-1/2 -translate-x-1/2 py-8 z-50 flex justify-between gap-12"
           style={{ width: heroWidth }}
         >
           <Link className="text-background text-lg overflow-hidden" href="/">
