@@ -162,6 +162,8 @@ export const NameIntro = (props: Props) => {
         ref={containerRef}
         className="w-svh h-svh flex justify-center relative bg-background overflow-y-hidden z-20 backdrop-blur-[20rem] backdrop-saturate-2000"
       >
+        <div className="absolute bg-foreground w-full h-full bottom-0 left-0 backdrop" />
+        {/* NAVBAR */}
         <div
           className="fixed top-0 left-1/2 -translate-x-1/2 py-8 z-50 flex justify-between gap-12 mix-blend-difference"
           style={{ width: heroWidth }}
@@ -182,7 +184,7 @@ export const NameIntro = (props: Props) => {
             <span className="nav-item inline-block">2025</span>
           </Link>
         </div>
-        <div className="absolute bg-foreground w-full h-full bottom-0 left-0 backdrop" />
+        {/* TEXT CONTAINER */}
         <div
           ref={textContainerRef}
           className="flex justify-center items-start transition-all duration-300 mix-blend-difference"
