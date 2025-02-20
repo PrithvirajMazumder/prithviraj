@@ -5,14 +5,14 @@ import { NameIntro } from '@/components/name-intro'
 import { useState } from 'react'
 
 export default function Home() {
-  const [loadComplete, setLoadComplete] = useState(true)
+  const [loadComplete, setLoadComplete] = useState(false)
 
   return (
     <>
       <Cursor />
       <div>
         {loadComplete && <NameIntro />}
-        {/* {!loadComplete && <InitialLoader onLoadComplete={() => setLoadComplete(true)} />} */}
+        {!loadComplete && <InitialLoader onLoadComplete={() => setLoadComplete(true)} />}
       </div>
     </>
   )

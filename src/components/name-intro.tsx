@@ -34,7 +34,7 @@ export const NameIntro = (props: Props) => {
           },
           {
             scaleY: scaleFactor,
-            duration: 0.5,
+            duration: 0.8,
             ease: 'power3.out',
             stagger: 0.03,
             onComplete: () => {
@@ -45,7 +45,7 @@ export const NameIntro = (props: Props) => {
         )
         .to('.letter', {
           scaleY: 1,
-          duration: 0.4,
+          duration: 0.8,
           ease: 'power3.inOut',
           stagger: 0.03
         })
@@ -53,7 +53,7 @@ export const NameIntro = (props: Props) => {
           delay: -0.8,
           transformOrigin: 'bottom',
           height: 0,
-          duration: 0.8,
+          duration: 0.6,
           ease: 'power3.inOut',
           onComplete: props.onAnimationComplete && props.onAnimationComplete
         })
@@ -66,23 +66,23 @@ export const NameIntro = (props: Props) => {
             height: 0
           },
           {
-            delay: -0.2,
+            delay: -0.4,
             height: 'max-content',
             yPercent: 0,
             opacity: 1,
-            duration: 0.8,
+            duration: 1,
             stagger: 0.1,
             ease: 'power3.out'
           }
         )
         .to(containerRef.current, {
-          delay: -0.9,
+          delay: -1,
           backgroundColor: 'rgb(var(--background) / 1)',
           duration: 0,
           ease: 'power3.out'
         })
         .to('.letters-container', {
-          delay: -0.9,
+          delay: -1,
           color: 'black',
           duration: 0,
           ease: 'power3.out'
@@ -93,9 +93,9 @@ export const NameIntro = (props: Props) => {
             top: -(window.innerHeight * 2)
           },
           {
-            delay: -0.85,
+            delay: -1,
             top: -(window.innerHeight * (isSmaller('sm') ? 1.65 : isSmaller('md') ? 1.55 : 1.5)),
-            duration: 1,
+            duration: 1.2,
             ease: 'power3.out'
           }
         )
@@ -109,7 +109,7 @@ export const NameIntro = (props: Props) => {
             delay: -1,
             yPercent: 0,
             opacity: 1,
-            duration: 0.8,
+            duration: 1,
             stagger: 0.1,
             ease: 'power3.out'
           }
@@ -117,9 +117,9 @@ export const NameIntro = (props: Props) => {
 
       if (window.innerWidth < 768) {
         mobileTl.to(heroTextRef.current, {
-          delay: -1.5,
+          delay: -2,
           paddingBottom: '6rem',
-          duration: 0.5,
+          duration: 0.8,
           ease: 'power3.out'
         })
       }
@@ -192,7 +192,17 @@ export const NameIntro = (props: Props) => {
       >
         <div className="absolute bg-foreground w-full h-full bottom-0 left-0 backdrop" />
         {/* NAVBAR */}
-        <div className="fixed top-0 left-1/2 -translate-x-1/2 py-8 z-50 flex justify-between gap-12" style={{ width: heroWidth }}>
+
+        <div className="flex fixed top-4 md:hidden px-4 py-2 left-1/2 -translate-x-1/2 w-[calc(100svw-2rem)] justify-between gap-4 items-center mobile-nav">
+          <Link className="text-background text-xl font-bold italic overflow-hidden font" href="/">
+            <span className="nav-item inline-block">Logo</span>
+          </Link>
+          <button className="flex flex-col gap-2 justify-center items-center w-6 h-6 nav-item">
+            <span className="w-full h-[2px] bg-background rounded-full" />
+            <span className="w-full h-[2px] bg-background rounded-full" />
+          </button>
+        </div>
+        <div className="hidden fixed top-0 left-1/2 -translate-x-1/2 py-8 z-50 md:flex justify-between gap-12" style={{ width: heroWidth }}>
           <Link className="text-background text-2xl overflow-hidden" href="/">
             <span className="nav-item inline-block">Portfolio</span>
           </Link>
