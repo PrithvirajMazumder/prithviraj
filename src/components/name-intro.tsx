@@ -16,31 +16,33 @@ export const NameIntro = (props: Props) => {
   const heroTextRef = useRef<HTMLHeadingElement>(null)
   const accentBackdropRef = useRef<HTMLDivElement>(null)
   const [scaleFactor, setScaleFactor] = useState(1)
+  const [heroTextHeight, setHeroTextHeight] = useState(0)
   const [heroWidth, setHeroWidth] = useState<number>(0)
   const [fontSize, setFontSize] = useState('9rem')
-  const {isSmaller} = useBreakpoint()
+  const { isSmaller } = useBreakpoint()
 
   useGSAP(
     () => {
       const tl = gsap.timeline()
 
-      tl.fromTo(
-        '.letter',
-        {
-          scaleY: 0,
-          transformOrigin: 'top'
-        },
-        {
-          scaleY: scaleFactor,
-          duration: 0.5,
-          ease: 'power3.out',
-          stagger: 0.03,
-          onComplete: () => {
-            textContainerRef.current?.classList.add('items-end')
-            gsap.set('.letter', { transformOrigin: 'bottom' })
+      const mobileTl = tl
+        .fromTo(
+          '.letter',
+          {
+            scaleY: 0,
+            transformOrigin: 'top'
+          },
+          {
+            scaleY: scaleFactor,
+            duration: 0.5,
+            ease: 'power3.out',
+            stagger: 0.03,
+            onComplete: () => {
+              textContainerRef.current?.classList.add('items-end')
+              gsap.set('.letter', { transformOrigin: 'bottom' })
+            }
           }
-        }
-      )
+        )
         .to('.letter', {
           scaleY: 1,
           duration: 0.4,
@@ -92,7 +94,7 @@ export const NameIntro = (props: Props) => {
           },
           {
             delay: -0.85,
-            top: -(window.innerHeight * 1.5),
+            top: -(window.innerHeight * (isSmaller('sm') ? 1.65 : isSmaller('md') ? 1.55 : 1.5)),
             duration: 1,
             ease: 'power3.out'
           }
@@ -112,6 +114,15 @@ export const NameIntro = (props: Props) => {
             ease: 'power3.out'
           }
         )
+
+      if (window.innerWidth < 768) {
+        mobileTl.to(heroTextRef.current, {
+          delay: -1.5,
+          paddingBottom: '6rem',
+          duration: 0.5,
+          ease: 'power3.out'
+        })
+      }
     },
     { scope: containerRef, dependencies: [scaleFactor] }
   )
@@ -157,7 +168,14 @@ export const NameIntro = (props: Props) => {
       }
     }
 
+    const updateHeroTextHeight = () => {
+      if (heroTextRef.current) {
+        setHeroTextHeight(heroTextRef.current.offsetHeight)
+      }
+    }
+
     updateHeroWidth()
+    updateHeroTextHeight()
     window.addEventListener('resize', updateHeroWidth)
     return () => window.removeEventListener('resize', updateHeroWidth)
   }, [fontSize])
@@ -170,25 +188,25 @@ export const NameIntro = (props: Props) => {
       />
       <div
         ref={containerRef}
-        className="w-svh h-svh flex justify-center relative bg-background overflow-y-hidden z-20 backdrop-blur-[10rem] md:backdrop-blur-[20rem] backdrop-saturate-2000"
+        className="w-svh h-svh flex justify-center relative bg-background overflow-y-hidden z-20 backdrop-blur-[7rem] md:backdrop-blur-[20rem] backdrop-saturate-2000"
       >
         <div className="absolute bg-foreground w-full h-full bottom-0 left-0 backdrop" />
         {/* NAVBAR */}
         <div className="fixed top-0 left-1/2 -translate-x-1/2 py-8 z-50 flex justify-between gap-12" style={{ width: heroWidth }}>
-          <Link className="text-background text-lg overflow-hidden" href="/">
+          <Link className="text-background text-2xl overflow-hidden" href="/">
             <span className="nav-item inline-block">Portfolio</span>
           </Link>
-          <Link className="text-background text-lg overflow-hidden" href="/">
+          <Link className="text-background text-2xl overflow-hidden" href="/">
             <span className="nav-item inline-block">About</span>
           </Link>
-          <Link className="text-background text-2xl font-bold italic overflow-hidden font" href="/">
+          <Link className="text-background text-4xl font-bold italic overflow-hidden font" href="/">
             <span className="nav-item inline-block">Prithvi</span>
           </Link>
-          <Link className="text-background text-lg overflow-hidden" href="/">
+          <Link className="text-background text-2xl overflow-hidden" href="/">
             <span className="nav-item inline-block">Contact</span>
           </Link>
-          <Link className="text-background text-lg overflow-hidden" href="#">
-            <span className="nav-item inline-block">2025</span>
+          <Link className="text-background text-2xl overflow-hidden" href="#">
+            <span className="nav-item inline-block">Blogs</span>
           </Link>
         </div>
         {/* TEXT CONTAINER */}
@@ -203,8 +221,13 @@ export const NameIntro = (props: Props) => {
             className="flex flex-col whitespace-nowrap justify-end gap-8 relative overflow-y-visible"
             style={{ fontSize }}
           >
-            <h3 className="text-3xl text-gray-600 subtitle w-2/3 text-wrap ml-4 absolute -top-24 left-0">
-              I am just and ordinary frontend developer and designer from Kolkata (City of Joy), India
+            <h3
+              className="text-center md:text-start text-xl md:text-5xl text-gray-600 font-medium subtitle w-full  md:w-2/3 text-wrap md:ml-4 absolute left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0"
+              style={{
+                bottom: heroTextHeight + (isSmaller('md') ? 184 : 24)
+              }}
+            >
+              Designing & building digital experiences—Frontend developer from Kolkata (City of Joy).
             </h3>
             <h1 className="flex text-white font-bold my-0 tracking-tight leading-none letters-container">
               {Array.from(Name).map((char, i) => (
