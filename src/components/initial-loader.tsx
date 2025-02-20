@@ -1,81 +1,77 @@
-"use client";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { useRef, useState } from "react";
+'use client'
+import { useGSAP } from '@gsap/react'
+import { gsap } from 'gsap'
+import { useRef, useState } from 'react'
 
 const loaderLevels = [
   {
     step: 1,
-    levelText: 12,
+    levelText: 12
   },
   {
     step: 2,
-    levelText: 36,
+    levelText: 36
   },
   {
     step: 3,
-    levelText: 45,
+    levelText: 45
   },
   {
     step: 4,
-    levelText: 78,
+    levelText: 78
   },
   {
     step: 5,
-    levelText: 99,
-  },
-];
+    levelText: 99
+  }
+]
 
 type LoaderTextProps = {
-  startAnimation: boolean;
-  onAnimationComplete: () => void;
-  level: number;
-};
+  startAnimation: boolean
+  onAnimationComplete: () => void
+  level: number
+}
 const LoaderText = (props: LoaderTextProps) => {
-  const loaderContainerRef = useRef<HTMLDivElement>(null);
-  const [shouldEnd, setShouldEnd] = useState(false);
+  const loaderContainerRef = useRef<HTMLDivElement>(null)
+  const [shouldEnd, setShouldEnd] = useState(false)
 
   useGSAP(
     () => {
       if (props.startAnimation) {
-        gsap.to(".loader-text", {
+        gsap.to('.loader-text', {
           x: 0,
           onComplete: () => {
-            setShouldEnd(true);
-          },
-        });
+            setShouldEnd(true)
+          }
+        })
         if (shouldEnd) {
-          gsap.to(".loader-text", {
+          gsap.to('.loader-text', {
             x: 360,
             onStart: () => {
-              props.onAnimationComplete();
-            },
-          });
+              props.onAnimationComplete()
+            }
+          })
         }
       }
     },
     {
       scope: loaderContainerRef,
-      dependencies: [props.startAnimation, shouldEnd],
+      dependencies: [props.startAnimation, shouldEnd]
     }
-  );
+  )
 
   return (
     <div ref={loaderContainerRef} className="relative flex-1 overflow-hidden">
-      <p className="loader-text text-[16rem] text-background font-bold leading-none translate-x-[-360px]">
-        {props.level}
-      </p>
+      <p className="loader-text text-[16rem] text-background font-bold leading-none translate-x-[-360px]">{props.level}</p>
     </div>
-  );
-};
+  )
+}
 
 type InitialLoaderProps = {
-  onLoadComplete: () => void;
-};
+  onLoadComplete: () => void
+}
 export const InitialLoader = (props: InitialLoaderProps) => {
-  const [activeLoaderLevel, setActiveLoaderLevel] = useState(
-    loaderLevels[0].step
-  );
+  const [activeLoaderLevel, setActiveLoaderLevel] = useState(loaderLevels[0].step)
 
   return (
     <div className="w-svh h-svh bg-foreground relative z-40">
@@ -87,13 +83,13 @@ export const InitialLoader = (props: InitialLoaderProps) => {
             startAnimation={activeLoaderLevel === level.step}
             onAnimationComplete={() => {
               if (level.step === loaderLevels.length) {
-                return props.onLoadComplete();
+                return props.onLoadComplete()
               }
-              setActiveLoaderLevel(level.step + 1);
+              setActiveLoaderLevel(level.step + 1)
             }}
           />
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

@@ -1,9 +1,8 @@
 'use client'
-import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { useRef, useEffect, useState } from 'react'
+import { gsap } from 'gsap'
 import Link from 'next/link'
-import { useBreakpoint } from '@/hooks/use-breakpoint'
+import { useEffect, useRef, useState } from 'react'
 
 const Name = 'Prithvi Raj'
 
@@ -18,7 +17,6 @@ export const NameIntro = (props: Props) => {
   const [scaleFactor, setScaleFactor] = useState(1)
   const [heroWidth, setHeroWidth] = useState<number>(0)
   const [fontSize, setFontSize] = useState('9rem')
-  const { isSmaller } = useBreakpoint()
 
   useGSAP(
     () => {
@@ -32,9 +30,9 @@ export const NameIntro = (props: Props) => {
         },
         {
           scaleY: scaleFactor,
-          duration: 0.5, // reduced from 0.8
+          duration: 0.5,
           ease: 'power3.out',
-          stagger: 0.03, // reduced from 0.05
+          stagger: 0.03,
           onComplete: () => {
             textContainerRef.current?.classList.add('items-end')
             gsap.set('.letter', { transformOrigin: 'bottom' })
@@ -43,15 +41,15 @@ export const NameIntro = (props: Props) => {
       )
         .to('.letter', {
           scaleY: 1,
-          duration: 0.4, // reduced from 0.6
+          duration: 0.4,
           ease: 'power3.inOut',
-          stagger: 0.03 // reduced from 0.05
+          stagger: 0.03
         })
         .to('.backdrop', {
-          delay: -0.8, // adjusted from -1 to match new timing
+          delay: -0.8,
           transformOrigin: 'bottom',
           height: 0,
-          duration: 0.8, // reduced from 1
+          duration: 0.8,
           ease: 'power3.inOut',
           onComplete: props.onAnimationComplete && props.onAnimationComplete
         })
