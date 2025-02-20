@@ -38,19 +38,32 @@ const LoaderText = (props: LoaderTextProps) => {
   useGSAP(
     () => {
       if (props.startAnimation) {
-        gsap.to('.loader-text', {
-          x: 0,
-          onComplete: () => {
-            setShouldEnd(true)
-          }
-        })
-        if (shouldEnd) {
-          gsap.to('.loader-text', {
-            x: 360,
-            onStart: () => {
-              props.onAnimationComplete()
+        gsap.fromTo(
+          '.loader-text',
+          {
+            x: -(loaderContainerRef?.current?.offsetWidth ?? 0),
+            opacity: 1
+          },
+          {
+            x: 0,
+            onComplete: () => {
+              setShouldEnd(true)
             }
-          })
+          }
+        )
+        if (shouldEnd) {
+          gsap.fromTo(
+            '.loader-text',
+            {
+              x: 0
+            },
+            {
+              x: loaderContainerRef?.current?.offsetWidth ?? 0 + 50,
+              onStart: () => {
+                props.onAnimationComplete()
+              }
+            }
+          )
         }
       }
     },
@@ -62,7 +75,7 @@ const LoaderText = (props: LoaderTextProps) => {
 
   return (
     <div ref={loaderContainerRef} className="relative flex-1 overflow-hidden">
-      <p className="loader-text text-[16rem] text-background font-bold leading-none translate-x-[-360px]">{props.level}</p>
+      <p className="loader-text text-[16rem] text-background font-bold leading-none opacity-0">{props.level}</p>
     </div>
   )
 }
@@ -83,7 +96,9 @@ export const InitialLoader = (props: InitialLoaderProps) => {
             startAnimation={activeLoaderLevel === level.step}
             onAnimationComplete={() => {
               if (level.step === loaderLevels.length) {
-                return props.onLoadComplete()
+                return setTimeout(() => {
+                  props.onLoadComplete()
+                }, 800)
               }
               setActiveLoaderLevel(level.step + 1)
             }}

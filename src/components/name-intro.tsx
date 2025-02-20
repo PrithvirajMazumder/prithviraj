@@ -94,7 +94,7 @@ export const NameIntro = (props: Props) => {
           },
           {
             delay: -1,
-            top: -(window.innerHeight * (isSmaller('sm') ? 1.65 : isSmaller('md') ? 1.55 : 1.5)),
+            top: -(window.innerHeight * (isSmaller('sm') ? 1.65 : isSmaller('md') ? 1.55 : 1.45)),
             duration: 1.2,
             ease: 'power3.out'
           }
@@ -106,7 +106,7 @@ export const NameIntro = (props: Props) => {
             opacity: 0
           },
           {
-            delay: -1,
+            delay: -1.3,
             yPercent: 0,
             opacity: 1,
             duration: 1,
@@ -117,7 +117,7 @@ export const NameIntro = (props: Props) => {
 
       if (window.innerWidth < 768) {
         mobileTl.to(heroTextRef.current, {
-          delay: -2,
+          delay: -2.2,
           paddingBottom: '6rem',
           duration: 0.8,
           ease: 'power3.out'
