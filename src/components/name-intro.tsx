@@ -1,4 +1,5 @@
 'use client'
+import { useBreakpoint } from '@/hooks/use-breakpoint'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import Link from 'next/link'
@@ -17,6 +18,7 @@ export const NameIntro = (props: Props) => {
   const [scaleFactor, setScaleFactor] = useState(1)
   const [heroWidth, setHeroWidth] = useState<number>(0)
   const [fontSize, setFontSize] = useState('9rem')
+  const {isSmaller} = useBreakpoint()
 
   useGSAP(
     () => {
@@ -53,21 +55,7 @@ export const NameIntro = (props: Props) => {
           ease: 'power3.inOut',
           onComplete: props.onAnimationComplete && props.onAnimationComplete
         })
-        .fromTo(
-          '.nav-item',
-          {
-            yPercent: -100,
-            opacity: 0
-          },
-          {
-            delay: -0.5,
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: 'power3.out'
-          }
-        )
+
         .fromTo(
           '.subtitle',
           {
@@ -76,7 +64,7 @@ export const NameIntro = (props: Props) => {
             height: 0
           },
           {
-            delay: -1.2,
+            delay: -0.2,
             height: 'max-content',
             yPercent: 0,
             opacity: 1,
@@ -86,13 +74,13 @@ export const NameIntro = (props: Props) => {
           }
         )
         .to(containerRef.current, {
-          delay: -1,
+          delay: -0.9,
           backgroundColor: 'rgb(var(--background) / 1)',
           duration: 0,
           ease: 'power3.out'
         })
         .to('.letters-container', {
-          delay: -1,
+          delay: -0.9,
           color: 'black',
           duration: 0,
           ease: 'power3.out'
@@ -100,14 +88,27 @@ export const NameIntro = (props: Props) => {
         .fromTo(
           accentBackdropRef.current,
           {
-            top: -(window.innerHeight * 1.55),
+            top: -(window.innerHeight * 2)
+          },
+          {
+            delay: -0.85,
+            top: -(window.innerHeight * 1.5),
+            duration: 1,
+            ease: 'power3.out'
+          }
+        )
+        .fromTo(
+          '.nav-item',
+          {
+            yPercent: -100,
             opacity: 0
           },
           {
             delay: -1,
-            top: -(window.innerHeight * 1.5),
+            yPercent: 0,
             opacity: 1,
-            duration: 1,
+            duration: 0.8,
+            stagger: 0.1,
             ease: 'power3.out'
           }
         )
@@ -126,10 +127,19 @@ export const NameIntro = (props: Props) => {
       const viewportHeight = window.innerHeight
       const totalCharacters = Name.length + 1
 
-      const widthBasedSize = Math.floor(viewportWidth / (totalCharacters * 0.35))
-      const heightBasedSize = Math.floor(viewportHeight * 0.2)
+      // Adjust scaling factors based on screen size
+      const widthScaleFactor = viewportWidth < 768 ? 0.5 : 0.35 // More aggressive scaling for mobile
+      const heightScaleFactor = viewportWidth < 768 ? 0.15 : 0.2 // Slightly reduced height on mobile
 
-      const finalSize = Math.min(widthBasedSize, heightBasedSize)
+      const widthBasedSize = Math.floor(viewportWidth / (totalCharacters * widthScaleFactor))
+      const heightBasedSize = Math.floor(viewportHeight * heightScaleFactor)
+
+      // Set minimum and maximum sizes
+      const minSize = 32 // Minimum readable size
+      const maxSize = Math.floor(viewportHeight * 0.2) // Maximum size relative to viewport height
+
+      const calculatedSize = Math.min(widthBasedSize, heightBasedSize)
+      const finalSize = Math.max(minSize, Math.min(calculatedSize, maxSize))
 
       setFontSize(`${finalSize}px`)
       setScaleFactor(viewportHeight / finalSize)
@@ -160,14 +170,11 @@ export const NameIntro = (props: Props) => {
       />
       <div
         ref={containerRef}
-        className="w-svh h-svh flex justify-center relative bg-background overflow-y-hidden z-20 backdrop-blur-[20rem] backdrop-saturate-2000"
+        className="w-svh h-svh flex justify-center relative bg-background overflow-y-hidden z-20 backdrop-blur-[10rem] md:backdrop-blur-[20rem] backdrop-saturate-2000"
       >
         <div className="absolute bg-foreground w-full h-full bottom-0 left-0 backdrop" />
         {/* NAVBAR */}
-        <div
-          className="fixed top-0 left-1/2 -translate-x-1/2 py-8 z-50 flex justify-between gap-12"
-          style={{ width: heroWidth }}
-        >
+        <div className="fixed top-0 left-1/2 -translate-x-1/2 py-8 z-50 flex justify-between gap-12" style={{ width: heroWidth }}>
           <Link className="text-background text-lg overflow-hidden" href="/">
             <span className="nav-item inline-block">Portfolio</span>
           </Link>

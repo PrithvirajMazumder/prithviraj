@@ -45,7 +45,8 @@ export const useBreakpoint = () => {
     breakpoint,
     width,
     isSmaller: (bp: Breakpoint) => {
-      if (!bp || !breakpoint) return false
+      if (!bp) return false
+      if (!breakpoint) return true
       const breakpointOrder = ['sm', 'md', 'lg', 'xl', '2xl']
       return breakpointOrder.indexOf(breakpoint) < breakpointOrder.indexOf(bp)
     },
