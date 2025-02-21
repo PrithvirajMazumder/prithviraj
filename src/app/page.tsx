@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <>
-      <Cursor />
+      <Cursor isLoading={!loadComplete} />
       <div>
         {loadComplete && <NameIntro />}
         {!loadComplete && <InitialLoader onLoadComplete={() => setLoadComplete(true)} />}

@@ -2,8 +2,8 @@
 import { useBreakpoint } from '@/hooks/use-breakpoint'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
-import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { Navbar } from '@/components/navbar'
 
 const Name = 'Prithviraj'
 
@@ -117,7 +117,7 @@ export const NameIntro = (props: Props) => {
 
       if (window.innerWidth < 768) {
         mobileTl.to(heroTextRef.current, {
-          delay: -2.2,
+          delay: -1.94,
           paddingBottom: '6rem',
           duration: 0.8,
           ease: 'power3.out'
@@ -191,34 +191,8 @@ export const NameIntro = (props: Props) => {
         className="w-svh h-svh flex justify-center relative bg-background overflow-y-hidden z-20 backdrop-blur-[7rem] md:backdrop-blur-[20rem] backdrop-saturate-2000"
       >
         <div className="absolute bg-foreground w-full h-full bottom-0 left-0 backdrop" />
-        {/* NAVBAR */}
+        <Navbar heroWidth={heroWidth} />
 
-        <div className="flex fixed top-4 md:hidden px-4 py-2 left-1/2 -translate-x-1/2 w-[calc(100svw-2rem)] justify-between gap-4 items-center mobile-nav">
-          <Link className="text-background text-xl font-bold italic overflow-hidden font" href="/">
-            <span className="nav-item inline-block">Logo</span>
-          </Link>
-          <button className="flex flex-col gap-2 justify-center items-center w-6 h-6 nav-item">
-            <span className="w-full h-[2px] bg-background rounded-full" />
-            <span className="w-full h-[2px] bg-background rounded-full" />
-          </button>
-        </div>
-        <div className="hidden fixed top-0 left-1/2 -translate-x-1/2 py-8 z-50 md:flex justify-between gap-12" style={{ width: heroWidth }}>
-          <Link className="text-background text-2xl overflow-hidden" href="/">
-            <span className="nav-item inline-block">Portfolio</span>
-          </Link>
-          <Link className="text-background text-2xl overflow-hidden" href="/">
-            <span className="nav-item inline-block">About</span>
-          </Link>
-          <Link className="text-background text-4xl font-bold italic overflow-hidden font" href="/">
-            <span className="nav-item inline-block">Prithvi</span>
-          </Link>
-          <Link className="text-background text-2xl overflow-hidden" href="/">
-            <span className="nav-item inline-block">Contact</span>
-          </Link>
-          <Link className="text-background text-2xl overflow-hidden" href="#">
-            <span className="nav-item inline-block">Blogs</span>
-          </Link>
-        </div>
         {/* TEXT CONTAINER */}
         <div
           ref={textContainerRef}
@@ -237,7 +211,7 @@ export const NameIntro = (props: Props) => {
                 bottom: heroTextHeight + (isSmaller('md') ? 184 : 24)
               }}
             >
-              Designing & building digital experiences—Frontend developer from Kolkata (City of Joy).
+              Designing & building digital experiences Software Consultant and Designer from Kolkata (City of Joy).
             </h3>
             <h1 className="flex text-white font-bold my-0 tracking-tight leading-none letters-container">
               {Array.from(Name).map((char, i) => (
