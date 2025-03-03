@@ -31,11 +31,13 @@ export const Cursor = (props: Props) => {
         gsap.to('.cursor-dot', {
           scale: 3,
           duration: 0.05,
+          ease: 'elastic'
         })
       } else {
         gsap.to('.cursor-dot', {
           scale: 1,
           duration: 0.05,
+          ease: 'elastic'
         })
       }
     }
