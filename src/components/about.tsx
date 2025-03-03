@@ -12,7 +12,7 @@ type Props = {
 export const About = (props: Props) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLHeadingElement>(null)
-  const aboutRef = useRef<HTMLHeadingElement>(null)
+  const aboutRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
     () => {
@@ -40,7 +40,7 @@ export const About = (props: Props) => {
           opacity: 0
         },
         {
-          opacity: 0.3,
+          opacity: 1,
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
@@ -51,6 +51,26 @@ export const About = (props: Props) => {
           }
         }
       )
+
+      // After initial animation, animate each word
+      const words = aboutRef.current?.querySelectorAll('.word')
+      if (words) {
+        gsap.fromTo(
+          words,
+          { opacity: 0.3 },
+          {
+            opacity: 1,
+            stagger: 0.2,
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 40%',
+              end: 'top 5%',
+              scrub: 1,
+              markers: false
+            }
+          }
+        )
+      }
     },
     { scope: containerRef }
   )
@@ -66,9 +86,13 @@ export const About = (props: Props) => {
       <h1 ref={textRef} className="font-black text-start text-foreground text-[11svh] absolute left-0">
         Mazumder
       </h1>
-      <h1 ref={aboutRef} className="font-black text-start text-foreground text-[7svh] absolute left-0 leading-none mt-[8rem]">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur, a nemo! Eius rerum
-      </h1>
+      <div ref={aboutRef} className="font-black text-start text-foreground text-[7svh] absolute left-0 leading-none mt-[8rem]">
+        {'is a full stack software engineer who is more inclined towards creating beautiful, scalable and easy to use user experience.'.split(' ').map((word, index) => (
+          <span key={`word-${index}`} className="word inline-block mr-2 opacity-30">
+            {word}
+          </span>
+        ))}
+      </div>
     </div>
   )
 }
