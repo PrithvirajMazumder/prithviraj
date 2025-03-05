@@ -19,7 +19,7 @@ export const About = (props: Props) => {
       gsap.fromTo(
         textRef.current,
         {
-          top: 200
+          top: 100
         },
         {
           top: -60,
@@ -61,10 +61,11 @@ export const About = (props: Props) => {
           {
             opacity: 1,
             stagger: 0.2,
+            ease: 'none',
             scrollTrigger: {
               trigger: containerRef.current,
               start: 'top 40%',
-              end: 'top 5%',
+              end: 'top 0%',
               scrub: 1,
               markers: false
             }
@@ -86,8 +87,8 @@ export const About = (props: Props) => {
       <h1 ref={textRef} className="font-black text-start text-foreground text-[11svh] absolute left-0">
         Mazumder
       </h1>
-      <div ref={aboutRef} className="font-black text-start text-foreground text-[7svh] absolute left-0 leading-none mt-[8rem]">
-        {'is a full stack software engineer who is more inclined towards creating beautiful, scalable and easy to use user experience.'.split(' ').map((word, index) => (
+      <div ref={aboutRef} className="font-black text-start text-foreground text-[6svh] absolute left-0 leading-tight mt-[8rem]">
+        {"I'm a full-stack software consultant who thrives on building scalable, high-performance applications. Blending logic with craftsmanship, I create systems that are not only efficient and resilient but also deliver seamless and intuitive user experiences.".split(' ').map((word, index) => (
           <span key={`word-${index}`} className="word inline-block mr-2 opacity-30">
             {word}
           </span>

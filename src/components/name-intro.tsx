@@ -112,7 +112,8 @@ export const NameIntro = () => {
           delay: -1,
           color: 'black',
           duration: 0,
-          ease: 'power3.out'
+          ease: 'power3.out',
+          onComplete: () => setNameIntroComplete(true)
         })
         .fromTo(
           accentBackdropRef.current,
@@ -121,7 +122,7 @@ export const NameIntro = () => {
           },
           {
             delay: -1,
-            top: -(window.innerHeight * (isSmaller('sm') ? 1.65 : isSmaller('md') ? 1.55 : 1.45)),
+            top: -(window.innerHeight * (isSmaller('sm') ? 1.65 : isSmaller('md') ? 1.55 : 1.50)),
             duration: 1.2,
             ease: 'power3.out'
           }
@@ -139,7 +140,6 @@ export const NameIntro = () => {
             duration: 1,
             stagger: 0.1,
             ease: 'power3.out',
-            onComplete: () => setNameIntroComplete(true)
           }
         )
 
