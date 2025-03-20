@@ -41,17 +41,8 @@ export const LandingPage = () => {
             scale: 1,
             rotateX: 0,
             duration: 1.2,
+            delay: 1.5,
             stagger: 0.1,
-            ease: 'power3.out'
-          }
-        ).fromTo(
-          '.landing-page-3d-scene',
-          {
-            opacity: 0
-          },
-          {
-            opacity: 0.06,
-            duration: 1,
             ease: 'power3.out'
           }
         )
@@ -62,9 +53,9 @@ export const LandingPage = () => {
 
   return (
     <main id={SectionIDs.landingPage} className="relative min-h-screen bg-foreground" ref={containerRef}>
-      <ThreeScene className="landing-page-3d-scene" />
+      <ThreeScene className="opacity-[0.06]" />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-4 z-10 pointer-events-none">
-        <h1 ref={headingRef} className="font-bold mb-8 font-le-murmure text-7xl md:text-[32svh] text-white pointer-events-auto">
+        <h1 ref={headingRef} className="font-bold mb-8 font-le-murmure text-7xl md:text-[32svh] text-background pointer-events-auto">
           Prithvi
         </h1>
       </div>
