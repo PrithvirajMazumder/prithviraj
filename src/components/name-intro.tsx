@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
 import { Navbar } from '@/components/navbar'
 import { About } from './about'
+import ThreeGlobe from './three-globe'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -214,6 +215,9 @@ export const NameIntro = () => {
         ref={accentBackdropRef}
         className="accent-backdrop fixed left-1/2 -translate-x-1/2 w-[calc(100svh*2)] h-[calc(100svh*2)] rounded-full z-10 bg-foreground"
       />
+      <div className="absolute inset-0 z-0 opacity-70">
+        <ThreeGlobe autoRotate={true} interactive={false} />
+      </div>
       <div
         ref={containerRef}
         className="w-svw bg-background relative overflow-y-visible z-20 backdrop-blur-[7rem] md:backdrop-blur-[20rem] backdrop-saturate-2000"

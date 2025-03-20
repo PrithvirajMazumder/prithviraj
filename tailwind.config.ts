@@ -15,6 +15,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        'le-murmure': ['Le Murmure', 'sans-serif'],
+      },
     },
   },
   plugins: [],

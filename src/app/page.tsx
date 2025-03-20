@@ -1,5 +1,13 @@
+'use client'
+
+import { LandingPage } from '@/components/sections/LandingPage'
+
 const Home = () => {
-  return <div>Home</div>
+  return (
+    <>
+      <LandingPage />
+    </>
+  )
 }
 
 export default Home
