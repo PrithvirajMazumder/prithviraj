@@ -1,11 +1,13 @@
 'use client'
 
-import { LandingPage } from '@/components/sections/LandingPage'
+import { Navbar } from '@/components/navbar'
+import { LandingSection } from '@/components/sections/landing-section'
 
 const Home = () => {
   return (
     <>
-      <LandingPage />
+      <Navbar />
+      <LandingSection />
     </>
   )
 }

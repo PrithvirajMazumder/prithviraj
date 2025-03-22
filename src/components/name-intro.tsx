@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
-import { Navbar } from '@/components/navbar'
+import { Navbar } from '@/components/navbar-v1'
 import { About } from './about'
 import ThreeGlobe from './three-globe'
 

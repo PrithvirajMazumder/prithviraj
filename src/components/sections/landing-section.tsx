@@ -6,7 +6,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { useRef } from 'react'
 
-export const LandingPage = () => {
+export const LandingSection = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
 
@@ -55,9 +55,19 @@ export const LandingPage = () => {
     <main id={SectionIDs.landingPage} className="relative min-h-screen bg-foreground" ref={containerRef}>
       <ThreeScene className="opacity-[0.06]" />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-4 z-10 pointer-events-none">
-        <h1 ref={headingRef} className="font-bold mb-8 font-le-murmure text-7xl md:text-[32svh] text-background pointer-events-auto">
+        <h1 ref={headingRef} className="mb-8 font-le-murmure text-7xl md:text-[32svh] text-background pointer-events-auto">
           Prithvi
         </h1>
+      </div>
+      <div className="absolute bottom-0 w-svw py-8 px-16 flex items-center justify-between">
+        <span className="text-2xl text-background">
+          Software Consultant <br />
+          from Kolkata, India
+        </span>
+        <span className="text-2xl text-background text-right">
+          Currently working at <br />
+          TechVerito Software Solutions LLP
+        </span>
       </div>
     </main>
   )
