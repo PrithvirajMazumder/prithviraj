@@ -5,10 +5,12 @@ import { OrbitControls, PerspectiveCamera, useGLTF } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 gsap.registerPlugin(ScrollTrigger)
+const BASE_ROTATION = { x: -0.25, y: 0.65, z: 0 }
+const BASE_POSITION = { x: 2.75, y: 0, z: -1 }
 
 type ThreeSceneProps = {
   className?: string
@@ -29,12 +31,11 @@ const ThreeScene = ({ className = '' }: ThreeSceneProps) => {
 }
 
 const Scene = () => {
+  const [baseRotation] = useState<{ x: number; y: number; z: number }>(BASE_ROTATION)
+  const [basePosition] = useState<{ x: number; y: number; z: number }>(BASE_POSITION)
   const modelRef = useRef<THREE.Group>(null)
   const { scene } = useGLTF('/gltfs/radial-glass.gltf')
   const ScaleFactor = 2.25
-
-  const baseRotation = { x: -0.25, y: 0.65, z: 0 }
-  const basePosition = { x: 2.75, y: 0, z: -1 }
 
   useGSAP(() => {
     if (!modelRef.current) return
@@ -66,6 +67,13 @@ const Scene = () => {
   useEffect(() => {
     if (!modelRef.current) return
 
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      const scrollPercent = (scrollTop / docHeight) * 100
+      console.log('scrollPercent: ', scrollPercent)
+    }
+
     const handleMouseMove = (event: MouseEvent) => {
       const { innerWidth, innerHeight } = window
       const x = basePosition.x + (event.clientX / innerWidth - 0.5) * 0.2 // Subtle movement
@@ -80,7 +88,11 @@ const Scene = () => {
     }
 
     window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    window.addEventListener('wheel', handleScroll)
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('wheel', handleScroll)
+    }
   }, [])
 
   const model = scene.clone()
