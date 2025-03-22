@@ -5,7 +5,7 @@ import { OrbitControls, PerspectiveCamera, useGLTF } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -33,14 +33,18 @@ const Scene = () => {
   const { scene } = useGLTF('/gltfs/radial-glass.gltf')
   const ScaleFactor = 2.25
 
+  // Store the base rotation and position values
+  const baseRotation = useRef({ x: -0.25, y: 0.65, z: 0 })
+  const basePosition = useRef({ x: 2.75, y: 0, z: -1 })
+
   // Set initial rotation and handle z-axis rotation animation using useGSAP
   useGSAP(() => {
     if (!modelRef.current) return
 
     // Set initial rotation
-    modelRef.current.rotation.y = 0.65
-    modelRef.current.rotation.x = -0.25
-    modelRef.current.position.x = 2.75
+    modelRef.current.rotation.y = baseRotation.current.y
+    modelRef.current.rotation.x = baseRotation.current.x
+    modelRef.current.position.x = basePosition.current.x
 
     // Create z-axis rotation animation that stops with easing
     const rotationTl = gsap.timeline()
@@ -53,15 +57,35 @@ const Scene = () => {
       repeat: 0,
       onComplete: () => {
         if (modelRef.current) {
-          modelRef.current.rotation.y = 0.65
-          modelRef.current.rotation.x = -0.25
-          modelRef.current.position.x = 2.75
+          modelRef.current.rotation.y = baseRotation.current.y
+          modelRef.current.rotation.x = baseRotation.current.x
+          modelRef.current.position.x = basePosition.current.x
         }
       }
     })
   }, [])
 
-  // Clone the scene to avoid issues with multiple renders
+  // Apply parallax effect based on mouse position
+  useEffect(() => {
+    if (!modelRef.current) return
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const { innerWidth, innerHeight } = window
+      const x = basePosition.current.x + (event.clientX / innerWidth - 0.5) * 0.2 // Subtle movement
+      const y = basePosition.current.y - (event.clientY / innerHeight - 0.5) * 0.2
+
+      gsap.to(modelRef.current?.position ?? '', {
+        x,
+        y,
+        duration: 0.5,
+        ease: 'power2.out'
+      })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   const model = scene.clone()
 
   return <primitive object={model} ref={modelRef} scale={ScaleFactor} position={[0, 0, -1]} />
