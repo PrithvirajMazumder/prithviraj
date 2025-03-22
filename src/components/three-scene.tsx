@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 gsap.registerPlugin(ScrollTrigger)
-const BASE_ROTATION = { x: -0.25, y: 0.65, z: 0 }
+const BASE_ROTATION = { x: -0.25, y: 0.65, z: Math.PI }
 const BASE_POSITION = { x: 2.75, y: 0, z: -1 }
 
 type ThreeSceneProps = {
@@ -33,6 +33,7 @@ const ThreeScene = ({ className = '' }: ThreeSceneProps) => {
 const Scene = () => {
   const [baseRotation] = useState<{ x: number; y: number; z: number }>(BASE_ROTATION)
   const [basePosition] = useState<{ x: number; y: number; z: number }>(BASE_POSITION)
+  const currentPosition = useRef({ x: BASE_POSITION.x, y: BASE_POSITION.y, z: BASE_POSITION.z })
   const modelRef = useRef<THREE.Group>(null)
   const { scene } = useGLTF('/gltfs/radial-glass.gltf')
   const ScaleFactor = 2.25
@@ -71,13 +72,30 @@ const Scene = () => {
       const scrollTop = window.scrollY
       const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
       const scrollPercent = (scrollTop / docHeight) * 100
-      console.log('scrollPercent: ', scrollPercent)
+
+      currentPosition.current = {
+        x: BASE_POSITION.x - scrollPercent * 0.07,
+        y: BASE_POSITION.y - scrollPercent * 0.1,
+        z: BASE_POSITION.z
+      }
+      gsap.to(modelRef.current?.position ?? '', {
+        y: BASE_POSITION.y - scrollPercent * 0.1,
+        x: BASE_POSITION.x - scrollPercent * 0.07,
+        duration: 0.5,
+        ease: 'power2.out'
+      })
+      gsap.to(modelRef.current?.rotation ?? '', {
+        y: BASE_ROTATION.y - scrollPercent * 0.005,
+        z: BASE_ROTATION.z + scrollPercent * 0.005,
+        duration: 0.5,
+        ease: 'power2.out'
+      })
     }
 
     const handleMouseMove = (event: MouseEvent) => {
       const { innerWidth, innerHeight } = window
-      const x = basePosition.x + (event.clientX / innerWidth - 0.5) * 0.2 // Subtle movement
-      const y = basePosition.y - (event.clientY / innerHeight - 0.5) * 0.2
+      const x = (currentPosition.current?.x ?? 0) + (event.clientX / innerWidth - 0.5) * 0.2 // Subtle movement
+      const y = (currentPosition.current?.y ?? 0) - (event.clientY / innerHeight - 0.5) * 0.2
 
       gsap.to(modelRef.current?.position ?? '', {
         x,
