@@ -18,10 +18,8 @@ export default function App() {
   }, [])
 
   return (
-    <>
-      <ReactLenis root options={{ autoRaf: true }} ref={lenisRef}>
-        <LandingSection />
-      </ReactLenis>
-    </>
+    <ReactLenis root options={{ autoRaf: true }} ref={lenisRef}>
+      <LandingSection />
+    </ReactLenis>
   )
 }

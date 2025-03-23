@@ -15,17 +15,18 @@ export const AboutSection = () => {
     const lines = gsap.utils.toArray('.line')
 
     gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: '+=100%',
-          scrub: true,
-          pin: true,
-          anticipatePin: 1
-        }
-      })
-      .fromTo(lines, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, stagger: 0.5, ease: 'power4.out' })
+    .timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top+=5% top', // ✅ Adjusted start position for smoother transition
+        end: '+=100%',
+        scrub: true,
+        pin: true,
+        pinSpacing: true, // ✅ Allow pinning to function correctly here
+        anticipatePin: 1
+      }
+    })
+    .fromTo(lines, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, stagger: 0.5, ease: 'power4.out' })
   }, [])
 
   return (
