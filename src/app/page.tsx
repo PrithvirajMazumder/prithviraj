@@ -1,4 +1,5 @@
 'use client'
+import { Cursor } from '@/components/cursor'
 import { LandingSection } from '@/components/sections/landing-section'
 import gsap from 'gsap'
 import ReactLenis, { LenisRef } from 'lenis/react'
@@ -19,6 +20,7 @@ export default function App() {
 
   return (
     <ReactLenis root options={{ autoRaf: true }} ref={lenisRef}>
+      <Cursor />
       <LandingSection />
     </ReactLenis>
   )
