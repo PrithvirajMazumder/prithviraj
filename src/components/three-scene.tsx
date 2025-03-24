@@ -75,11 +75,11 @@ const Scene = () => {
 
       currentPosition.current = {
         x: BASE_POSITION.x - scrollPercent * 0.07,
-        y: BASE_POSITION.y - scrollPercent * 0.1,
+        y: BASE_POSITION.y - scrollPercent * 0.18,
         z: BASE_POSITION.z
       }
       gsap.to(modelRef.current?.position ?? '', {
-        y: BASE_POSITION.y - scrollPercent * 0.1,
+        y: BASE_POSITION.y - scrollPercent * 0.18,
         x: BASE_POSITION.x - scrollPercent * 0.07,
         duration: 0.5,
         ease: 'power2.out'

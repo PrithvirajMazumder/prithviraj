@@ -27,6 +27,9 @@ export const IntoText = () => {
         }
       })
       .fromTo(lines, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.2, stagger: 0.5, ease: 'power4.out' })
+      // Add a delay to keep text visible before fading out
+      .to(lines, { opacity: 1, duration: 3, ease: 'none' }) // This creates a pause where text remains visible
+      .fromTo(lines, { opacity: 1 }, {opacity: 0, duration: 1.2, stagger: 0.2, ease: 'power4.out'})
   }, [])
 
   return (
