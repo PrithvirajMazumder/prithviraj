@@ -9,14 +9,15 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 gsap.registerPlugin(ScrollTrigger)
+
 const BASE_ROTATION = { x: -0.25, y: 0.65, z: Math.PI }
 const BASE_POSITION = { x: 2.75, y: 0, z: -1 }
 
-type ThreeSceneProps = {
+type Props = {
   className?: string
 }
 
-const ThreeScene = ({ className = '' }: ThreeSceneProps) => {
+export const LandingPage3dScene = ({ className = '' }: Props) => {
   return (
     <div className={`fixed inset-0 w-screen h-screen overflow-hidden ${className}`}>
       <Canvas>
@@ -118,4 +119,3 @@ const Scene = () => {
   return <primitive object={model} ref={modelRef} scale={ScaleFactor} position={[0, 0, -1]} />
 }
 
-export default ThreeScene

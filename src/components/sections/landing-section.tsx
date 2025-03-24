@@ -1,11 +1,11 @@
 'use client'
 
-import ThreeScene from '@/components/three-scene'
 import { SectionIDs } from '@/constants/sectionsIds'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useRef } from 'react'
+import { LandingPage3dScene } from '../landing-page-3d-scene'
 import { Navbar } from '../navbar'
 import { IntoText } from './into-text'
 
@@ -147,7 +147,7 @@ export const LandingSection = () => {
   return (
     <main id={SectionIDs.landingPage} ref={containerRef} className="bg-foreground">
       <Navbar />
-      <ThreeScene className="opacity-[0.06]" />
+      <LandingPage3dScene className="opacity-[0.06]" />
       <div ref={headingContainerRef} className="relative min-h-svh">
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4 z-10 pointer-events-none overflow-hidden">
           <h1 ref={headingRef} className="mb-8 font-le-murmure text-7xl md:text-[32svh] text-background pointer-events-auto">
