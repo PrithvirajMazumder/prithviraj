@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export const AboutSection = () => {
+export const IntoText = () => {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const textRef = useRef<HTMLDivElement | null>(null)
 
