@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useRef } from 'react'
 import { LandingPage3dScene } from '../landing-page-3d-scene'
 import { Navbar } from '../navbar'
-import { IntoText } from './into-text'
+import { IntroText } from './intro-text'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -165,7 +165,7 @@ export const LandingSection = () => {
           </span>
         </div>
       </div>
-      <IntoText />
+      <IntroText />
     </main>
   )
 }
