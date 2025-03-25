@@ -4,32 +4,36 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useRef } from 'react'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const works = ['Project One', 'Project Two', 'Project Three', 'Project Four']
 
 export const WorkSection = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const itemsRef = useRef<Array<HTMLDivElement | null>>([])
+  const carouselContainerRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
     () => {
-      if (!containerRef.current) return
+      if (!containerRef.current || !carouselContainerRef.current) return
 
+      // Destroy existing ScrollTriggers to prevent multiple instances
+      ScrollTrigger.refresh()
+
+      const totalProjects = works.length
+      const projectHeight = window.innerHeight // Each project takes full viewport height
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: 'top top', // When top of trigger hits top of viewport
-          end: 'bottom top', // End when bottom of section reaches top of viewport
-          pin: true, // Pin the section during scroll
-          pinSpacing: false, // Prevent adding extra space
-          scrub: 4, // Smoother scrubbing with less delay
-          invalidateOnRefresh: true // Recalculate on resize
+          start: 'top top',
+          end: () => `+=${projectHeight * totalProjects}px`, // Explicit scroll end calculation
+          pin: true,
+          pinSpacing: true, // Allow proper scrolling space
+          scrub: 1, // Smooth scrolling
+          invalidateOnRefresh: true
         }
       })
 
-      // Initial Animations with more controlled timing
+      // Background accent scale animation
       tl.fromTo(
         '.about-accent-background',
         { scale: 0 },
@@ -39,48 +43,66 @@ export const WorkSection = () => {
           ease: 'power4.out'
         }
       )
-        .fromTo(
-          '.about-accent-3d-scene',
-          { y: '100%' },
-          {
-            y: 0,
-            duration: 1,
-            ease: 'power4.out'
-          },
-          0
-        ) // Simultaneous start
-        .fromTo(
-          '.work-label',
-          { opacity: 0, x: 100 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 1,
-            ease: 'power4.out'
-          },
-          0.5
-        ) // Slightly delayed start
-        .to('.work-label', {
-          opacity: 0,
-          duration: 0.5,
-          ease: 'power4.out'
-        })
 
-      // Carousel Animation with improved control and increased delay between items
+      // 3D Scene entrance animation
+      tl.fromTo(
+        '.about-accent-3d-scene',
+        { y: '100%' },
+        {
+          y: 0,
+          duration: 1,
+          ease: 'power4.out'
+        },
+        0
+      )
+
+      // Work label animation
+      tl.fromTo(
+        '.work-label',
+        { opacity: 0, x: 100 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1,
+          ease: 'power4.out'
+        },
+        0.5
+      ).to('.work-label', {
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power4.out'
+      })
+
+      // Project reveal and transition animations
       itemsRef.current.forEach((item, index) => {
         if (item) {
+          // Entrance animation for each project
           tl.fromTo(
             item,
             {
               x: '200%',
+              scale: 0.5
             },
             {
               x: '0%',
+              scale: 1,
               duration: 1,
               ease: 'power4.out'
             },
-            1 + index * 3.3 // Increased delay between animations for more distinct separation
+            1 + index * 1 // Staggered entrance
           )
+
+            // Exit animation for each project
+            .to(
+              item,
+              {
+                x: '-200%',
+                scale: 0.8,
+                duration: 1,
+                ease: 'power4.out'
+              },
+              2 + index * 1 // Staggered exit
+            )
         }
       })
     },
@@ -93,14 +115,14 @@ export const WorkSection = () => {
       <div className="bg-background z-10 h-12 w-12 rounded-full absolute bottom-0 left-1/2 -translate-x-1/2 about-accent-background" />
 
       {/* Carousel Wrapper */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div ref={carouselContainerRef} className="absolute inset-0 flex items-center justify-center">
         {works.map((work, index) => (
           <div
             key={index}
             ref={(el) => {
               if (el) itemsRef.current[index] = el
             }}
-            className="absolute top-1/2 -translate-y-1/2 w-[60%] h-[40%] bg-gray-800 text-white flex items-center justify-center text-3xl font-bold shadow-lg"
+            className="absolute top-[20%] -translate-y-[-20%] w-[60%] h-[40%] bg-gray-800 text-white flex items-center justify-center text-3xl font-bold shadow-lg"
             style={{ zIndex: 50 + index }}
           >
             {work}
