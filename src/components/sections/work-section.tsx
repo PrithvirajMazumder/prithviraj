@@ -2,11 +2,11 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useRef } from 'react'
-import { AboutSection3dScene } from '../about-section-3d-scene'
+import { WorkSection3dScene } from '@/components/work-section-3d-scene'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export const AboutSection = () => {
+export const WorkSection = () => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
@@ -99,7 +99,7 @@ export const AboutSection = () => {
       >
         <h1 className="text-7xl md:text-[8svh] font-le-murmure text-foreground work-label">Work • Work • Work • Work • Work • Work • Work</h1>
       </div>
-      <AboutSection3dScene className="opacity-[0.06] z-20 about-accent-3d-scene" />
+      <WorkSection3dScene className="opacity-[0.06] z-20 about-accent-3d-scene" />
     </div>
   )
 }

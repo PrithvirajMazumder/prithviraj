@@ -16,7 +16,7 @@ type Props = {
   className?: string
 }
 
-export const AboutSection3dScene = ({ className = '' }: Props) => {
+export const WorkSection3dScene = ({ className = '' }: Props) => {
   return (
     <div className={`absolute inset-0 w-full h-full overflow-hidden pointer-events-none ${className}`}>
       <Canvas>
